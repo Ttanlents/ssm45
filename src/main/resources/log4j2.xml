@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!--log4j本身的日志打印级别-->
+<Configuration status="INFO">
+    <Appenders>
+        <!--配置Console和File   在loggers中指定使用console还是File-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%-5level] %logger{36} - %message%n"/>
+        </Console>
+        <!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用-->
+        <File name="log" fileName="log/test.log" append="false">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %message%xEx%n"/>
+        </File>
+
+    </Appenders>
+    <!--<Loggers>
+        &lt;!&ndash;指定全局默认日志级别    本项目在application配置的是debug&ndash;&gt;
+        <Root level="INFO">
+            &lt;!&ndash;指定使用Console和File   就是有输出到文件  有输出到 控制台&ndash;&gt;
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="log"/>
+        </Root>
+        &lt;!&ndash;false表示只在自定义的Appender中进行输出。&ndash;&gt;
+        &lt;!&ndash;<Logger name="org.springframework" level="info" additivity="false">
+            <AppenderRef ref="log" />
+        </Logger>&ndash;&gt;
+    </Loggers>-->
+
+    <Loggers>
+        <Logger name="com.yjf.dao" level="trace" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

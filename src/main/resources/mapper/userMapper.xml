@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.yjf.dao.UserDao">
+
+    <select id="getUserById" parameterType="Integer" resultType="User">
+        select * from user where id=#{id}
+    </select>
+
+    <select id="listAll" resultType="Integer" parameterType="String">
+        select count(*) as count from user where name like concat('%',#{name},'%')
+    </select>
+
+    <insert id="addUser" parameterType="User" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into user values(default,#{name},#{salary},#{age})
+    </insert>
+
+    <update id="updateUser" parameterType="User" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        update user set name=#{name},salary=#{salary},age=#{age} where id=#{id}
+    </update>
+
+    <delete id="deleteUserById" parameterType="Integer">
+        delete from user where id=#{id}
+    </delete>
+
+    <select id="getUsersByName"  resultType="User">
+        select * from user where name like concat('%',#{name},'%') limit ${(page.pageCurrent-1)*page.pageSize},#{page.pageSize}
+    </select>
+
+
+
+</mapper>

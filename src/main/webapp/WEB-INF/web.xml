@@ -1,0 +1,123 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <!-- 指定欢迎页 -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+     <!--&lt;!&ndash;xml开始&ndash;&gt;
+    &lt;!&ndash; 上下文配置,读取spring配置文件 &ndash;&gt;
+    &lt;!&ndash;<context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:application.xml</param-value>
+    </context-param>
+
+    &lt;!&ndash; springMVC核心配置 &ndash;&gt;
+    <servlet>
+        <servlet-name>springmvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+     &lt;!&ndash;      读取springmvc配置文件 &ndash;&gt;
+            <param-value>classpath:springmvc-servlet.xml</param-value>
+        </init-param>
+    </servlet>     xml ....end-->
+
+
+
+
+    <!--设置自动创建的spring容器类型  加载配置类的方式创建一个web应用容器的类型-->
+    <context-param>
+    <param-name>contextClass</param-name>
+    <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </context-param>
+    <!--指定加载的配置类-->
+    <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>com.yjf.configs.MybatisConfig</param-value>
+    </context-param>
+
+    <!--spring子容器  在父容器创建后  创建，会自动传入父容器  所以子容器中也可以获取父容器管理的bean对象-->
+    <servlet>
+    <servlet-name>springmvc</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+    <param-name>contextClass</param-name>
+    <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </init-param>
+    <init-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>com.yjf.configs.SpringMvcConfig</param-value>
+    </init-param>
+    </servlet>
+
+    <servlet-mapping>
+    <servlet-name>springmvc</servlet-name>
+    <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <!--ssm整合注解形式end-->
+
+    <!--缺省Servlet-->
+    <servlet>
+        <servlet-name>default</servlet-name>
+        <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>0</param-value>
+        </init-param>
+        <init-param>
+            <param-name>listings</param-name>
+            <param-value>false</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Spring字符集过滤器 -->
+    <filter>
+        <filter-name>SpringEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>SpringEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--监听web启动就初始化ioc-->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- JSP页面的配置信息 -->
+    <jsp-config>
+        <jsp-property-group>
+            <url-pattern>/WEB-INF/jsp/*</url-pattern>
+            <!-- EL表达式是否忽略: true忽略 false不忽略 -->
+            <el-ignored>false</el-ignored>
+            <!-- JSP页面上的java代码是否有效: true: 无效 false:有效 -->
+            <scripting-invalid>false</scripting-invalid>
+            <!-- 在拦截到的所有jsp页面前面引入该页面 -->
+            <include-prelude>/taglib.jsp</include-prelude>
+        </jsp-property-group>
+    </jsp-config>
+</web-app>
